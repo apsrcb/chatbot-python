@@ -37,9 +37,9 @@ def greeting(sentence):
         if word.lower() in GREETING_INPUTS:
             return random.choice(GREETING_RESPONSES)
 
-def response(user_response):
-    robo_response=''
-    sent_tokens.append(user_response)
+def response(ur_response):
+    r_response=''
+    sent_tokens.append(ur_response)
     TfidfVec = TfidfVectorizer(tokenizer=LemNormalize, stop_words='english')
     tfidf = TfidfVec.fit_transform(sent_tokens)
     vals = cosine_similarity(tfidf[-1], tfidf)
@@ -48,27 +48,27 @@ def response(user_response):
     flat.sort()
     req_tfidf = flat[-2]
     if(req_tfidf==0):
-        robo_response=robo_response+"I am sorry! I don't understand you :("
-        return robo_response
+        r_response=r_response+"I am sorry! I don't understand you :("
+        return r_response
     else:
-        robo_response = robo_response+sent_tokens[idx]
-        return robo_response
+        r_response = r_response+sent_tokens[idx]
+        return r_response
 flag=True
 print("ChatBot: My name is Rithika. I will answer your queries about XXX. If you want to exit, type Bye!")
 while(flag==True):
-    user_response = input()
-    user_response=user_response.lower()
-    if(user_response!='bye'):
-        if(user_response=='thanks' or user_response=='thank you' ):
+    ur_response = input()
+    ur_response=ur_response.lower()
+    if(ur_response!='bye'):
+        if(ur_response=='thanks' or ur_response=='thank you' ):
             flag=False
             print("Rithika: You are welcome..")
         else:
-            if(greeting(user_response)!=None):
-                print("Rithika: "+greeting(user_response))
+            if(greeting(ur_response)!=None):
+                print("Rithika: "+greeting(ur_response))
             else:
                 print("Rithika: ",end="")
-                print(response(user_response))
-                sent_tokens.remove(user_response)
+                print(response(ur_response))
+                sent_tokens.remove(ur_response)
     else:
         flag=False
         print("Rithika : Bye! take care..")
